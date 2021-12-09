@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 @Repository
-public class JdbcTacoRepository  {
+public class JdbcTacoRepository implements TacoRepository  {
     private JdbcTemplate jdbc;
 
     public JdbcTacoRepository(JdbcTemplate jdbc){
@@ -25,12 +25,13 @@ public class JdbcTacoRepository  {
     }
 
     @Override
-    public Taco save(Taco taco){
-        long tacoId=saveTacoInfo(taco);
+    public Taco save(Taco taco) {
+        long tacoId = saveTacoInfo(taco);
         taco.setId(tacoId);
-        for(Ingredient ingredient:taco.getIngredients()){
-            saveIngredientToTaco(ingredient,tacoId);
+        for (Ingredient ingredient : taco.getIngredients()) {
+            saveIngredientToTaco(ingredient, tacoId);
         }
+
         return taco;
     }
 
