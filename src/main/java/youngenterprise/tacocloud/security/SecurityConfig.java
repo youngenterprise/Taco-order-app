@@ -15,4 +15,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorities("ROLE_USER").and().withUser("woody").password("bullseye")
                  .authorities("ROLE_USER");
     }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("select username, password,enabled from Users "+ "where username=?")
+                .authoritiesByUsernameQuery("select username, authority from UserAuthorities "+
+                        "where username=?");
+    }
 }
