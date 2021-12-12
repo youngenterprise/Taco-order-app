@@ -1,9 +1,13 @@
 package youngenterprise.tacocloud.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Service;
 import youngenterprise.tacocloud.User;
 import youngenterprise.tacocloud.data.UserRepository;
@@ -25,5 +29,25 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
             return user;
         }
         throw new UsernameNotFoundException("User '"+username+"' not found");
+    }
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Override
+    protected void configure (AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(userDetailsService);
+    }
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new StandardPasswordEncoder("53cr3t");
+    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth)
+            throws Exception {
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(encoder());
     }
 }
