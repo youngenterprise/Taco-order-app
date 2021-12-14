@@ -1,12 +1,13 @@
 server:
-  port:9090
+  port: 8443
+  ssl:
+    key-store: file:///path/to/mykeys.jks
+    key-store-password: password
+    key-password: password
 
-spring:
-  datasource:
-  schema:
-    - order-schema.sql
-    - ingredient-schema.sql
-    - taco-schema.sql
-    - user-schema.sql
-  data:
-    - ingredients.sql
+logging:
+  level:
+  root: WARN
+  org:
+  springframework:
+  security: DEBUG
