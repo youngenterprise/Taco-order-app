@@ -1,0 +1,12 @@
+server:
+  port:9090
+
+spring:
+  datasource:
+  schema:
+    - order-schema.sql
+    - ingredient-schema.sql
+    - taco-schema.sql
+    - user-schema.sql
+  data:
+    - ingredients.sql
