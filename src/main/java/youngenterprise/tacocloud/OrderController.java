@@ -61,7 +61,7 @@ public class OrderController {
     @GetMapping
     public String ordersForUser(@AuthenticationPrincipal User user,Model model){
         Pageable pageable= PageRequest.of(0,props.getPageSize());
-        model.addAttribute("orders",orderRepo.findByUserOrderByPlavedAtDesc(user,pageable));
+        model.addAttribute("orders",orderRepo.findByUserOrderByPlacedAtDesc(user,pageable));
         return "orderList";
     }
 }
